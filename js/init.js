@@ -1,7 +1,5 @@
 /* JavaScript code */
 
-navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
-
 var cam_video_id = "camsource"
 
 window.addEventListener('DOMContentLoaded', function() {
@@ -12,22 +10,22 @@ window.addEventListener('DOMContentLoaded', function() {
         "video": true
     };
     // Replace the source of the video element with the stream from the camera
-    if (navigator.getUserMedia) {
-        navigator.getUserMedia(options, function(stream) {
-            video.src = (window.URL && window.URL.createObjectURL(stream)) || stream;
-        }, function(error) {
-            console.log(error)
-        });
-        // Below is the latest syntax. Using the old syntax for the time being for backwards compatibility.
-        // navigator.getUserMedia({video: true}, successCallback, errorCallback);
-    } else {
-        $("#qr-value").text('Sorry, native web camera streaming (getUserMedia) is not supported by this browser...')
-        return;
-    }
+    navigator.mediaDevices.getUserMedia(options)
+        .then(function(stream) {
+            video.srcObject = stream;
+        })
+        .catch(function(err) { console.log(err) });
+    // getUserMedia(options, function(stream) {
+    //     video.src = (window.URL && window.URL.createObjectURL(stream)) || stream;
+    // }, function(error) {
+    //     console.log(error)
+    // });
+    // Below is the latest syntax. Using the old syntax for the time being for backwards compatibility.
+    // getUserMedia({video: true}, successCallback, errorCallback);
 }, false);
 
 $(document).ready(function() {
-    if (!navigator.getUserMedia) return;
+    if (!navigator.mediaDevices.getUserMedia) return;
     cam = camera(cam_video_id);
     cam.start()
 })

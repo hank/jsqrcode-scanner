@@ -23,7 +23,7 @@
 */
 
 
-GridSampler = {};
+var GridSampler = {};
 
 GridSampler.checkAndNudgePoints=function( image,  points)
 		{
@@ -31,7 +31,7 @@ GridSampler.checkAndNudgePoints=function( image,  points)
 			var height = qrcode.height;
 			// Check and nudge points from start until we see some that are OK:
 			var nudged = true;
-			for (var offset = 0; offset < points.Length && nudged; offset += 2)
+			for (var offset = 0; offset < points.length && nudged; offset += 2)
 			{
 				var x = Math.floor (points[offset]);
 				var y = Math.floor( points[offset + 1]);
@@ -63,7 +63,7 @@ GridSampler.checkAndNudgePoints=function( image,  points)
 			}
 			// Check and nudge points from end:
 			nudged = true;
-			for (var offset = points.Length - 2; offset >= 0 && nudged; offset -= 2)
+			for (var offset = points.length - 2; offset >= 0 && nudged; offset -= 2)
 			{
 				var x = Math.floor( points[offset]);
 				var y = Math.floor( points[offset + 1]);
@@ -101,7 +101,7 @@ GridSampler.sampleGrid3=function( image,  dimension,  transform)
 		{
 			var bits = new BitMatrix(dimension);
 			var points = new Array(dimension << 1);
-			for (var y = 0; y < dimension; y++)
+			for (var y = 0; y < dimension; ++y)
 			{
 				var max = points.length;
 				var iValue =  y + 0.5;
@@ -118,12 +118,12 @@ GridSampler.sampleGrid3=function( image,  dimension,  transform)
 				{
 					for (var x = 0; x < max; x += 2)
 					{
-						var xpoint = (Math.floor( points[x]) * 4) + (Math.floor( points[x + 1]) * qrcode.width * 4);
+						//var xpoint = (Math.floor( points[x]) * 4) + (Math.floor( points[x + 1]) * qrcode.width * 4);
                         var bit = image[Math.floor( points[x])+ qrcode.width* Math.floor( points[x + 1])];
-						qrcode.imagedata.data[xpoint] = bit?255:0;
-						qrcode.imagedata.data[xpoint+1] = bit?255:0;
-						qrcode.imagedata.data[xpoint+2] = 0;
-						qrcode.imagedata.data[xpoint+3] = 255;
+						//qrcode.imagedata.data[xpoint] = bit?255:0;
+						//qrcode.imagedata.data[xpoint+1] = bit?255:0;
+						//qrcode.imagedata.data[xpoint+2] = 0;
+						//qrcode.imagedata.data[xpoint+3] = 255;
 						//bits[x >> 1][ y]=bit;
 						if(bit)
 							bits.set_Renamed(x >> 1, y);

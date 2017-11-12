@@ -27,10 +27,10 @@ var camera = (function(p_vid_id, p_inter, p_scale) {
 	    var h = video.videoHeight * scale;
 	    var qr_can = document.getElementById('qr-canvas').getContext('2d');
 	        qr_can.drawImage(video, 0, 0, w, h);
-	    try        { qrcode.decode();  }
+	    try        { code = qrcode.decode(); $("#qr-value").text(code); }
 	    catch(err) { $("#qr-value").text(err); }
 		// console.timeEnd('capture');
-	} 
+	}
 
 	return {
 		interval:interval,

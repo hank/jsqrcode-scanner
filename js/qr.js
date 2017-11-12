@@ -1,6 +1,7 @@
 function read(a)
 {
-    $("#qr-value").text(a);
+    console.log("QR: "+a);
+    $("#out-value").text(a);
 }
-    
+
 qrcode.callback = read;
